@@ -1,0 +1,64 @@
+<%- layout("/layouts/boilerplate.ejs") %>
+    <div class="row mt-4 all">
+        <div class="col-8 all-detail">
+            <h2 class="mb-4"><%= allinfo.title%></h2>
+        </div>
+        <div class="card col-7">
+            <img src="<%= allinfo.image%>" class="card-img-top show-img" alt="<%= allinfo.title %>'s image" >
+            <div class="card-body">
+                <i><b><h5 class="card-text" style="margin-bottom: 1rem;">Owned By  <%= allinfo.owner.username %></h5></b></i>
+                <h5 class="card-text" style="margin-bottom: 1rem;"><%= allinfo.description%></h5>
+                <h6 class="card-text" style="margin-bottom: 1rem;">&#8377; <%= allinfo.price.toLocaleString("un-IN")%></h6>
+                <h6 class="card-text" style="margin-bottom: 1rem;"><%= allinfo.location%></h6>
+                <h6 class="card-text" style="margin-bottom: 1rem;"><%= allinfo.country%></h6>
+            </div>
+            
+
+            <%if(curruser && curruser._id.equals(allinfo.owner._id)){%>
+            <div class="btns-edit-delete">
+                <a href="/hotels/<%= allinfo._id%>/edit" class="btn btn-dark edit-btn show-edit-btn">Edit</a>
+                <form action="/hotels/<%= allinfo._id%>/delete?_method=DELETE" method="post">
+                    <button class="btn btn-dark">Delete</button>
+                </form>
+            </div>
+            <%}%>
+        </div>
+        <div class="review"><hr>
+            <%if(curruser){%>
+            <h3>Leave a review</h3>
+            <form action="/hotels/<%= allinfo.id%>/review" method="post" novalidate class="needs-validation">
+                <div class="mb-3 mt-3">
+                    <label for="rating" class="form-label" >Rating</label>
+                    <input type="range" class="form-range" id="rating" name="review[rating]" min="1" max="5" required>
+                </div>
+                    <div class="mb-3 mt-3">
+                        <label for="comment" class="form-label" >Comment: </label><br>
+                        <textarea id="comment" class="form-control" name="review[comment]" rows="5" cols="30" required></textarea>
+                    </div>
+                <button class="btn btn-outline-dark">Submit</button>
+            </form>
+            <hr>
+            <%}%>
+            <h5 style="margin-bottom: 2rem;">All reviews</h3>
+            <div class="all-review">
+                <% for(review of allinfo.reviews){%>
+                    <div class="card per-review">
+                        <div class="review-element" style="display: inline-block;">
+                            <div class="review-option">
+                                <h5 class="card-title"><%= review.author.username%></h5>
+                                <i class="fa-solid fa-ellipsis-vertical menu-btn" id="menu-btn"></i>
+                                <div id="popup-menu" class="popup-menu">
+                                    <form action="/hotels/<%= allinfo.id%>/review/<%= review.id%>?_method=DELETE" method="post">
+                                        <button id="delete-btn" class="popup-option">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                            </div>
+                            <p class="card-text"><%= review.rating%> Stars</p>
+                            <p class="card-text"><%= review.comment%></p>
+                        </div>   
+                        <%}%>
+                    </div> 
+            </div>
+        </div>
+    </div>
