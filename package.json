@@ -1,11 +1,12 @@
 {
-  "engines":{
+  "engines": {
     "node": "20.17.0"
   },
   "name": "new-folder",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
+    "install": "npm install --legacy-peer-deps",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
