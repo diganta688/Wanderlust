@@ -1,0 +1,87 @@
+<nav class="navbar navbar-expand-md bg-body-light sticky-top border-bottom">
+    <div class="container-fluid innerNav">
+      <a class="navbar-brand" href="/hotels">
+        <div class="logoIcon">
+          <i class="fa-solid fa-earth-asia  "></i>
+        </div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: space-between;">
+        <div class="navbar-nav mb-2 mb-lg-0">
+            <a class="na-link websiteName " href="/hotels">Wanderlust</a>
+        </div>
+        <div class="navbar-nav search">
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search destinations" aria-label="Search">
+              <button class="btn btn-outline" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+            </form>
+        </div>
+        
+        <div class="navbar-nav endNav">
+          <div class="nav-item endNavOne">
+            <a class="nav-link " href="/hotels/new">Wanderlust your stay</a>
+          </div>
+          <div class="nav-item nav-itemUSER">
+            <button class="user" id="user">
+              <div class="userHam">
+                <i class="fa-solid fa-bars"></i>
+              </div>
+              <div class="userLogo">
+                <i class="fa-solid fa-user"></i>
+              </div>
+            </button>
+              <div class="userDropdown" id="userDropdown">
+                <% if(!curruser){ %>
+                  <div class="nav-item">
+                    <a class="nav-link " aria-current="page" href="/signup">Sign-Up</a>
+                  </div>
+                  <div class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                  </div>
+                <%}%>
+                <% if(curruser){ %>
+                  <div class="nav-item">
+                    <a class="nav-link " href="/logout">Logout</a>
+                  </div>
+                <%}%>
+                <div class="nav-item">
+                  <a class="nav-link " href="/hotels/new">Wanderlust your stay</a>
+                </div>
+                <div class="nav-item">
+                  <a class="nav-link " href="/">Help Center</a>
+                </div>
+            </div>
+          </div>
+            <div class="hamburgerUserInfoDisplay">
+              <div class="nav-item">
+                <div class="nav-item">
+                  <a class="nav-link " href="/hotels/new">Wanderlust your stay</a>
+                </div>
+              </div>
+              <% if(!curruser){ %>
+                <div class="nav-item">
+                  <div class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                  </div>
+                </div>
+                <div class="nav-item">
+                  <div class="nav-item">
+                    <a class="nav-link " aria-current="page" href="/signup">Sign-Up</a>
+                  </div>
+                </div>
+                <%}%>
+                <% if(curruser){ %>
+                <div class="nav-item">
+                  <div class="nav-item">
+                    <a class="nav-link " href="/logout">Logout</a>
+                  </div>
+                </div>
+                <%}%>
+            </div>
+          </div>
+      </div>
+    </div>
+  </nav>
+

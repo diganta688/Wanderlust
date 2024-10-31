@@ -1,0 +1,113 @@
+<%- layout("/layouts/boilerplate.ejs") %>
+<script>
+    let maptoken = '<%= process.env.MAP_TOKEN%>';
+    let Stays = <%- JSON.stringify(allinfo) %>;
+
+    
+</script>
+
+<div class="showMain">
+    <div class="showAllInfo">
+        <div class="upperPart">
+            <div class="allDetail">
+                <h2 class="mb-4"><%= allinfo.title%></h2>
+            </div>
+            <div class="showStayImg" id="showStayImg">
+                <img src="<%= allinfo.image.url%>" alt="" id="innerShowStayImg">
+            </div>
+            <div class="showStayOtherInfo">
+                <p class="showStayLocation"><%= allinfo.location%>, <%= allinfo.country%></p>
+                <p class="showStayDescription"><%= allinfo.description%></p>
+                <div class="showStayPrice">
+                    <div class="innerShowStayPrice">
+                        <p class="innerInnerShowStayPrice">&#8377; <%= allinfo.price.toLocaleString("un-IN")%></p>
+                        <p class="showPriceNightDay">night</p>
+                    </div>
+                    <div class="reserveStay">
+                        <button class="reserve-btn">Reserve</button>
+                    </div>
+                </div>
+                <div class="showOwnerInfo">
+                    <div class="ownerPhoto">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="ownerName">
+                        <p><b><%= allinfo.owner.username %></b>(owner)</p>
+                    </div>
+                </div>
+                <%if(curruser && curruser._id.equals(allinfo.owner._id)){%>
+                    <div class="btnsEditDelete">
+                        <a href="/hotels/<%= allinfo._id%>/edit" class="btn btn-outline-dark">Edit</a>
+                        <form action="/hotels/<%= allinfo._id%>/delete?_method=DELETE" method="post">
+                            <button class="btn btn-outline-danger">Delete</button>
+                        </form>
+                    </div>
+                <%}%>
+            </div>
+        </div>
+        <div class="lowerPart">
+            <div class="innerLowerPart">
+                <div class="locationMap">
+                    <h3>Where you'll be</h3>
+                    <div id="map"></div>
+                </div>
+                <div class="review">
+                    <%if(curruser){%>
+                    <h3>Leave a review</h3>
+                    <form action="/hotels/<%= allinfo.id%>/review" method="post" novalidate class="needs-validation">
+                        <div class="mb-3 mt-3">
+                            <fieldset class="starability-growRotate">
+                                <legend>First rating:</legend>
+                                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
+                            <div class="mb-3 mt-3">
+                                <label for="comment" class="form-label" >Comment: </label><br>
+                                <textarea id="comment" class="form-control" name="review[comment]" rows="5" cols="30" required></textarea>
+                            </div>
+                        <button class="btn btn-outline-dark">Submit</button>
+                    </form><hr>
+                    <%}%>
+                    <%if(allinfo.reviews.length >0){%>
+                        <h5 style="margin-bottom: 2rem;">All reviews</h3>
+                        <div class="allRreview">
+                            <% for(review of allinfo.reviews){%>
+                                <div class="indivisualReview">
+                                    <div class="reviewUpperContent">
+                                        <div class="reviewAuthor">
+                                            <div class="reviewAuthorIcon" style="margin-right: 0.8rem;">
+                                                <i class="fa-solid fa-user"></i>
+                                            </div>
+                                            <div class="reviewAuthorName">
+                                                <p><%= review.author.username%></p>
+                                            </div>
+                                        </div>
+                                        <div class="option">
+                                            <button type="button" class="btn btn-outline-danger">Delete</button>
+                                        </div>
+                                    </div>
+                                    <div class="reviewRating">
+                                        <p class="starability-result" data-rating="<%= review.rating%>"></p>
+                                    </div>
+                                    <div class="reviewComment">
+                                        <%= review.comment%>
+                                    </div>
+                                </div> 
+                            <%}%>
+                        </div> 
+                    <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/map.js"></script>

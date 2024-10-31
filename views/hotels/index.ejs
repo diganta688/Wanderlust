@@ -1,0 +1,54 @@
+<%- layout("/layouts/boilerplate.ejs") %>
+<div class="main">
+  <div class="scroll">
+    <div class="filters">
+      <a href="/hotels%>" style="color: black; text-decoration: none;">
+        <div class="filter1">
+        <div class="filterIcon" style="font-size: 20px; ">
+          <i class="fa-solid fa-house"></i>
+        </div>
+        <div class="filterName">
+          <p>HomePage</p>
+        </div>
+        <div class="underline"></div>
+      </div>
+    </a>
+      <%for(let icon of allIcons){%>
+        <a href="/hotels?category=<%= icon.iconvalue %>" style="color: black; text-decoration: none;">
+          <div class="filter1">
+          <div class="filterIcon">
+            <img src="<%= icon.image%>" alt="">
+          </div>
+          <div class="filterName">
+            <p><%= icon.iconname%></p>
+          </div>
+          <div class="underline"></div>
+        </div>
+      </a>
+      <%}%>
+    </div>
+  </div>
+    <div class="innerMain">
+      <%for(let hotel of allhotels){%>
+        <div class="step-listing">
+          <a href="/hotels/<%= hotel._id %>" class="main-page-list">
+            <div class=" hotels">
+              <div class="card-img">
+                <img src="<%= hotel.image.url%>" class="card-img-top" alt="<%= hotel.title %>'s images">
+              </div>
+              <div class="card-body" style="margin-left: 0.5rem;">
+                <div class="title-hotel">
+                  <b><p class="card-textb stayLocation"><%= hotel.location %></p></b>
+                  <p class="card-text stayTitle"><%= hotel.title %></p>
+                </div>
+                <div class="price-hotel">
+                  <p class="card-text"><b>&#8377; <%= hotel.price.toLocaleString('un-IN') %></b> night</p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      <%}%>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
